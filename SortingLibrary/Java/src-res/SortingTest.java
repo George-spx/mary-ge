@@ -2,12 +2,14 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import java.util.Comparator;
 import java.util.ArrayList;
+import org.junit.Rule;
+import org.junit.rules.ExpectedException;
 
 public class SortingTest{
 
   @Test
   public void testSortNullArrayList(){
-    Comparator comparator = initializeComparator();
+    Comparator <Integer> comparator = initializeComparator();
     InsertionSort <Integer> testInsertionSort = new InsertionSort<Integer>(comparator, null);
 
     testInsertionSort.sort();
@@ -15,9 +17,23 @@ public class SortingTest{
     assertEquals(null, testInsertionSort.array);
   }
 
+  @Rule
+  public ExpectedException thrown = ExpectedException.none();
+
+  @Test
+  public void testAddNullElement() throws SortException{
+    Comparator <Integer> comparator = initializeComparator();
+    InsertionSort <Integer> testInsertionSort = new InsertionSort<Integer>(comparator);
+
+    thrown.expect(SortException.class);
+    thrown.expectMessage("element cannot be null");
+    testInsertionSort.add(null);
+    
+  }
+
   @Test
   public void testSwapMethod(){
-    Comparator comparator = initializeComparator(); 
+    Comparator <Integer> comparator = initializeComparator(); 
     ArrayList <Integer> array = new ArrayList<Integer>();
     array.add(4);
     array.add(3);
@@ -34,7 +50,7 @@ public class SortingTest{
 
   @Test
   public void testAddMethodOnEmptyArray() throws Exception{
-    Comparator comparator = initializeComparator(); 
+    Comparator <Integer> comparator = initializeComparator(); 
     InsertionSort <Integer> testInsertionSort = new InsertionSort<Integer>(comparator);
     ArrayList <Integer> expectedArray = new ArrayList<>();
 
