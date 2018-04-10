@@ -2,6 +2,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import java.util.Comparator;
 import java.util.ArrayList;
+import java.io.*;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
 
@@ -59,6 +60,64 @@ public class SortingTest{
     expectedArray.add(3);
     assertEquals(expectedArray, testInsertionSort.array);
    
+  }
+
+  @Test(timeout = 60000) 
+  public void testIntegerUseCase(){
+   Comparator<Long> comparator = initializeLongComparator(); 
+   InsertionSort <Long> testInsertionSort = new InsertionSort<Long>(comparator);
+   BufferedReader readFile = initializeBufferedReader("integers.csv");
+   populateAndOrderArray(testInsertionSort, readFile);
+
+   assertTrue(isArrayOrdered(testInsertionSort.array));
+  }
+
+  public boolean isArrayOrdered(ArrayList<Long> array){
+    for(int i = 0; i < array.size()-1; i++){
+      if(array.get(i) > array.get(i+1)){
+        return false;
+      }
+    }
+    return true;
+  }
+  public void populateAndOrderArray(InsertionSort<Long> testInsertionSort, BufferedReader readFile){
+    String stringRead;
+    try{
+      while((stringRead = readFile.readLine()) != null){
+      testInsertionSort.add(Long.parseLong(stringRead));
+      } 
+    }catch(IOException|SortException e){
+      System.out.println(e);
+      fail();
+    }
+  }
+
+  public BufferedReader initializeBufferedReader(String fileName){
+    try{
+      BufferedReader readFile = new BufferedReader(new FileReader(fileName));
+      return readFile;
+    }catch(FileNotFoundException e){
+      System.out.println(e);
+      fail();
+    }
+    return null;
+  }
+
+  public Comparator<Long> initializeLongComparator(){
+    Comparator <Long> comparator = new Comparator<Long>(){
+      @Override
+      public int compare(Long e1, Long e2){
+        long res = e1-e2;
+        if(res < 0){
+          return -1;
+        }else if(res > 0){
+          return 1;
+        }else{
+          return 0;
+        }
+      }
+    };
+    return comparator;
   }
 
   public Comparator<Integer> initializeComparator(){
