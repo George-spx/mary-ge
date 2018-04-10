@@ -9,13 +9,14 @@ import org.junit.rules.ExpectedException;
 public class SortingTest{
 
   @Test
-  public void testSortNullArrayList(){
+  public void testSortEmptyArrayList(){
     Comparator <Integer> comparator = initializeComparator();
-    InsertionSort <Integer> testInsertionSort = new InsertionSort<Integer>(comparator, null);
+    InsertionSort <Integer> testInsertionSort = new InsertionSort<Integer>(comparator, true);
+    ArrayList <Integer> expectedArray = new ArrayList<Integer>();
 
     testInsertionSort.sort();
 
-    assertEquals(null, testInsertionSort.array);
+    assertEquals(expectedArray, testInsertionSort.array);
   }
 
   @Rule
@@ -24,7 +25,7 @@ public class SortingTest{
   @Test
   public void testAddNullElement() throws SortException{
     Comparator <Integer> comparator = initializeComparator();
-    InsertionSort <Integer> testInsertionSort = new InsertionSort<Integer>(comparator);
+    InsertionSort <Integer> testInsertionSort = new InsertionSort<Integer>(comparator, true);
 
     thrown.expect(SortException.class);
     thrown.expectMessage("element cannot be null");
@@ -36,10 +37,10 @@ public class SortingTest{
   public void testSwapMethod(){
     Comparator <Integer> comparator = initializeComparator(); 
     ArrayList <Integer> array = new ArrayList<Integer>();
-    array.add(4);
-    array.add(3);
-    InsertionSort <Integer> testInsertionSort = new InsertionSort<Integer>(comparator, array);
     ArrayList<Integer> expectedArray = new ArrayList<Integer>(); 
+    InsertionSort <Integer> testInsertionSort = new InsertionSort<Integer>(comparator, true);
+    testInsertionSort.array.add(4);
+    testInsertionSort.array.add(3);
     expectedArray.add(3);
     expectedArray.add(4);
 
@@ -52,7 +53,7 @@ public class SortingTest{
   @Test
   public void testAddMethodOnEmptyArray() throws Exception{
     Comparator <Integer> comparator = initializeComparator(); 
-    InsertionSort <Integer> testInsertionSort = new InsertionSort<Integer>(comparator);
+    InsertionSort <Integer> testInsertionSort = new InsertionSort<Integer>(comparator, true);
     ArrayList <Integer> expectedArray = new ArrayList<>();
 
     testInsertionSort.add(3);
@@ -62,10 +63,10 @@ public class SortingTest{
    
   }
 
-  @Test(timeout = 60000) 
+  @Test(timeout = 1000) 
   public void testIntegerUseCase(){
    Comparator<Long> comparator = initializeLongComparator(); 
-   InsertionSort <Long> testInsertionSort = new InsertionSort<Long>(comparator);
+   InsertionSort <Long> testInsertionSort = new InsertionSort<Long>(comparator, true);
    BufferedReader readFile = initializeBufferedReader("integers.csv");
    populateAndOrderArray(testInsertionSort, readFile);
 

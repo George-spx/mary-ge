@@ -9,21 +9,18 @@ import java.util.ArrayList;
 public class InsertionSort <T>{
   ArrayList<T> array = null;
   Comparator <? super T> comparator;
+  boolean crescentOrder;
 
  /**
   *
   * initializes the comparator and the array
   * @param comparator
   */
-    public InsertionSort(Comparator <? super T> comparator){
+    public InsertionSort(Comparator <? super T> comparator, boolean crescentOrder){
       this.comparator = comparator;
       this.array = new ArrayList<>();
+      this.crescentOrder = crescentOrder;
     }
-
-    public InsertionSort(Comparator <? super T> comparator, ArrayList <T> array){
-      this.comparator = comparator;
-      this.array = array;
-    }  
 
  /**
   *
@@ -45,17 +42,45 @@ public class InsertionSort <T>{
   */
     public void sort(){
       if(array != null){
-        boolean ordered = false;
-        for(int j = (array.size()-1); j >= 1 && !ordered; j--){
-          if((comparator.compare(array.get(j-1), array.get(j))) > 0){
-  	    swap(j-1, j);
-  	  }
-  	  else{
-  	    ordered = true;
-  	  }
+        if(crescentOrder){
+          crescentOrderSort();   
+        }
+        else{
+          decrescentOrderSort();
         }
       }
     }
+
+  /**
+   * places the last element added in the right position
+   *
+   */
+    public void crescentOrderSort(){
+      boolean ordered = false;
+      for(int j = (array.size()-1); j >= 1 && !ordered; j--){
+        if((comparator.compare(array.get(j-1), array.get(j))) >= 0){
+          swap(j-1, j);
+        }else{
+          ordered = true;
+        }
+      }  
+    }
+
+  /**
+   * places the last element added in the right position
+   *
+   */
+    public void decrescentOrderSort(){
+      boolean ordered = false;
+      for(int j = (array.size()-1); j >= 1 && !ordered; j--){
+        if((comparator.compare(array.get(j-1), array.get(j))) <= 0){
+          swap(j-1, j);
+        }else{
+          ordered = true;
+        }
+      }  
+    }
+
 
  /**
   * 
