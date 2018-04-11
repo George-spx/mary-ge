@@ -20,7 +20,7 @@ public class SumsApp{
     String read;
     try{
       while((read = readFileSums.readLine()) != null){
-        Sum.sumFinder(Long.parseLong(read), A);
+        System.out.println(Sum.sumFinder(Long.parseLong(read), A));
       } 
       }catch(IOException e){
         System.out.println(e);
@@ -42,6 +42,11 @@ public class SumsApp{
     };
 
     MergeSorter <Long> mergeSorter = new MergeSorter(comparator, A);
+    try{
+      mergeSorter.increasingSort();
+    }catch(SortException e){
+      System.out.println(e);
+    }
   }
 
   public static void main(String[] args){

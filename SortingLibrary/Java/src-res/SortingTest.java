@@ -63,19 +63,11 @@ public class SortingTest{
    
   }
 
-<<<<<<< HEAD
   @Test(timeout = 600000) 
   public void testIntegerUseCaseCrescent(){
    Comparator<Long> comparator = initializeLongComparator(); 
    InsertionSort <Long> testInsertionSort = new InsertionSort<Long>(comparator, true);
    BufferedReader readFile = initializeBufferedReader("test.csv");
-=======
-  @Test(timeout = 1000) 
-  public void testIntegerUseCase(){
-   Comparator<Long> comparator = initializeLongComparator(); 
-   InsertionSort <Long> testInsertionSort = new InsertionSort<Long>(comparator, true);
-   BufferedReader readFile = initializeBufferedReader("integers.csv");
->>>>>>> eae6c5748ab01a5d51eb8e4477aee18c3ab5ed1b
    populateAndOrderArray(testInsertionSort, readFile);
 
    assertTrue(isArrayOrdered(testInsertionSort.array));
@@ -89,8 +81,6 @@ public class SortingTest{
     }
     return true;
   }
-<<<<<<< HEAD
-
   @Test(timeout = 600000) 
   public void testIntegerUseCaseDecrescent(){
    Comparator<Long> comparator = initializeLongComparator(); 
@@ -109,8 +99,6 @@ public class SortingTest{
     }
     return true;
   }
-=======
->>>>>>> eae6c5748ab01a5d51eb8e4477aee18c3ab5ed1b
   public void populateAndOrderArray(InsertionSort<Long> testInsertionSort, BufferedReader readFile){
     String stringRead;
     try{
