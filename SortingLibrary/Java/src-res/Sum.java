@@ -1,5 +1,3 @@
-  
-=======
 /*
  * Copyright (C) 2018 Lorenzo Marietta
  *
@@ -22,6 +20,7 @@
  *
  * @author Lorenzo Marietta, George
  */
+import java.util.ArrayList;
 public class Sum {
   /**
    * method that checks wheter the element N is contained in array A
@@ -35,14 +34,21 @@ public class Sum {
   }
   
   private static int binarySearch(long difference, ArrayList<Long> A){
-    return recBinarySearch(difference, 0, array.size()-1, A); 
+    return recBinarySearch(difference, 0, A.size()-1, A); 
   } 
 
-  private static int recBinarySearch(int difference, int l, int r, ArrayList<Long> A){
-    if(l > r){
-      return -1; 
+  private static int recBinarySearch(long difference, int l, int r, ArrayList<Long> A){
+    int m = (l + r) / 2;
+    if(l > r) {
+      return -1;
     } 
+    if(difference == A.get(m)) {
+      return m;
+    }else if(difference < A.get(m)) {
+      return recBinarySearch(difference, l, m - 1, A);
+    }else {
+      return recBinarySearch(difference, m + 1, r, A);
+    }
   }
-  
-  
-}
+
+  }

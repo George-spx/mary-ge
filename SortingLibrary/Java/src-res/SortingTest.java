@@ -63,11 +63,11 @@ public class SortingTest{
    
   }
 
-  @Test(timeout = 1000) 
+  @Test(timeout = 600000) 
   public void testIntegerUseCaseCrescent(){
    Comparator<Long> comparator = initializeLongComparator(); 
    InsertionSort <Long> testInsertionSort = new InsertionSort<Long>(comparator, true);
-   BufferedReader readFile = initializeBufferedReader("numeri.csv");
+   BufferedReader readFile = initializeBufferedReader("test.csv");
    populateAndOrderArray(testInsertionSort, readFile);
 
    assertTrue(isArrayCrescentOrdered(testInsertionSort.array));
@@ -82,7 +82,7 @@ public class SortingTest{
     return true;
   }
 
-  @Test(timeout = 1000) 
+  @Test(timeout = 600000) 
   public void testIntegerUseCaseDecrescent(){
    Comparator<Long> comparator = initializeLongComparator(); 
    InsertionSort <Long> testInsertionSort = new InsertionSort<Long>(comparator, false);
