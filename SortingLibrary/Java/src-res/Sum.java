@@ -31,7 +31,7 @@ public class Sum {
     for(int i=0; i < A.size() && !result; i++){
       result = N > A.get(i) ? (-1 != (binarySearch(N - A.get(i), A))) : false;
     }
-    return false;
+    return result;
   }
   
   private static int binarySearch(long difference, ArrayList<Long> A){

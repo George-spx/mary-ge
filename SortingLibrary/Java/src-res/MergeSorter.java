@@ -58,7 +58,6 @@ public class MergeSorter<T> {
                 increasingMerge(j - i, j, Math.min(j + i, length));
             }
         }
-        
     }
 
     /**
@@ -74,7 +73,6 @@ public class MergeSorter<T> {
                 decreasingMerge(j - i, j, Math.min(j + i, length));
             }
         }
-        
     }
 
     /**
