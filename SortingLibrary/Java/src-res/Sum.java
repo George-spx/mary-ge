@@ -35,8 +35,12 @@ public class Sum {
   }
   
   private static int binarySearch(long difference, ArrayList<Long> A){
-     
+    return recBinarySearch(difference, 0, array.size()-1, A); 
   } 
+
+  private static int recBinarySearch(int difference, int l, int r, ArrayList<Long> A){
+    if(l 
+  }
   
   
 }
