@@ -1,5 +1,9 @@
+<<<<<<< HEAD
+=======
+  
+>>>>>>> eae6c5748ab01a5d51eb8e4477aee18c3ab5ed1b
 /*
- * Copyright (C) 2018 Lorenzo Marietta
+ * Copyright (C) 2018 Lorenzo Marietta, George
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -15,6 +19,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
+package mergesort;
+
+import.java.util.ArrayList;
 
 /**
  *
@@ -25,12 +32,12 @@ public class Sum {
   /**
    * method that checks wheter the element N is contained in array A
    * as a sum of two elements
-   * 
-   * @param N the number representing the sum to search for
-   * @param A the array containing a set of numbers 
    */
-  public static void sumFinder(long N, ArrayList<Long> A){
-
+  public boolean void sumFinder(long N, ArrayLyst<Long> A)(
+    for(int i=0; i<A.getSize(); i++){
+		return binarySearch (N - a.get(i), A) != -1;
+	}
+  
   }
   
   private static int binarySearch(long difference, ArrayList<Long> A){
@@ -52,3 +59,9 @@ public class Sum {
   }
 
   }
+<<<<<<< HEAD
+=======
+
+  
+}
+>>>>>>> eae6c5748ab01a5d51eb8e4477aee18c3ab5ed1b
