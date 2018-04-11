@@ -64,37 +64,18 @@ public class SortingTest{
   }
 
   @Test(timeout = 1000) 
-  public void testIntegerUseCaseCrescent(){
+  public void testIntegerUseCase(){
    Comparator<Long> comparator = initializeLongComparator(); 
    InsertionSort <Long> testInsertionSort = new InsertionSort<Long>(comparator, true);
-   BufferedReader readFile = initializeBufferedReader("numeri.csv");
+   BufferedReader readFile = initializeBufferedReader("integers.csv");
    populateAndOrderArray(testInsertionSort, readFile);
 
-   assertTrue(isArrayCrescentOrdered(testInsertionSort.array));
+   assertTrue(isArrayOrdered(testInsertionSort.array));
   }
 
-  public boolean isArrayCrescentOrdered(ArrayList<Long> array){
+  public boolean isArrayOrdered(ArrayList<Long> array){
     for(int i = 0; i < array.size()-1; i++){
       if(array.get(i) > array.get(i+1)){
-        return false;
-      }
-    }
-    return true;
-  }
-
-  @Test(timeout = 1000) 
-  public void testIntegerUseCaseDecrescent(){
-   Comparator<Long> comparator = initializeLongComparator(); 
-   InsertionSort <Long> testInsertionSort = new InsertionSort<Long>(comparator, false);
-   BufferedReader readFile = initializeBufferedReader("numeri.csv");
-   populateAndOrderArray(testInsertionSort, readFile);
-
-   assertTrue(isArrayDecrescentOrdered(testInsertionSort.array));
-  }
-
-  public boolean isArrayDecrescentOrdered(ArrayList<Long> array){
-    for(int i = 0; i < array.size()-1; i++){
-      if(array.get(i) < array.get(i+1)){
         return false;
       }
     }

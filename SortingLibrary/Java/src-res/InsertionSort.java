@@ -9,17 +9,17 @@ import java.util.ArrayList;
 public class InsertionSort <T>{
   ArrayList<T> array = null;
   Comparator <? super T> comparator;
-  boolean increasingOrder;
+  boolean crescentOrder;
 
  /**
   *
   * initializes the comparator and the array
   * @param comparator
   */
-    public InsertionSort(Comparator <? super T> comparator, boolean increasingOrder){
+    public InsertionSort(Comparator <? super T> comparator, boolean crescentOrder){
       this.comparator = comparator;
       this.array = new ArrayList<>();
-      this.increasingOrder = increasingOrder;
+      this.crescentOrder = crescentOrder;
     }
 
  /**
@@ -42,11 +42,11 @@ public class InsertionSort <T>{
   */
     public void sort(){
       if(array != null){
-        if(increasingOrder){
-          increasingOrderSort();   
+        if(crescentOrder){
+          crescentOrderSort();   
         }
         else{
-          decreasingOrderSort();
+          decrescentOrderSort();
         }
       }
     }
@@ -55,7 +55,7 @@ public class InsertionSort <T>{
    * places the last element added in the right position
    *
    */
-    private void increasingOrderSort(){
+    public void crescentOrderSort(){
       boolean ordered = false;
       for(int j = (array.size()-1); j >= 1 && !ordered; j--){
         if((comparator.compare(array.get(j-1), array.get(j))) >= 0){
@@ -70,7 +70,7 @@ public class InsertionSort <T>{
    * places the last element added in the right position
    *
    */
-    private void decreasingOrderSort(){
+    public void decrescentOrderSort(){
       boolean ordered = false;
       for(int j = (array.size()-1); j >= 1 && !ordered; j--){
         if((comparator.compare(array.get(j-1), array.get(j))) <= 0){
@@ -84,7 +84,7 @@ public class InsertionSort <T>{
 
  /**
   * 
-  * swaps the elements in array at position p, n
+  * swaps elements at position p, n in the array.
   * @param p1 position 1
   * @param p1 position 2
   *
