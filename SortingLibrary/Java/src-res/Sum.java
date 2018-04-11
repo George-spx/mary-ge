@@ -1,15 +1,4 @@
-<<<<<<< HEAD
-
-public class Sum{
   
-
-  /**
-   * method that checks wheter the element N is contained in array A
-   * as a sum of two elements
-   */
-  public void testFunction( 
-
-
 =======
 /*
  * Copyright (C) 2018 Lorenzo Marietta
@@ -32,9 +21,14 @@ package mergesort;
 
 /**
  *
- * @author Lorenzo Marietta
+ * @author Lorenzo Marietta, George
  */
 public class Sum {
-    
->>>>>>> 42d5a7a6e9ee8c66ec89bb0b954e5c699e5e33f2
+  /**
+   * method that checks wheter the element N is contained in array A
+   * as a sum of two elements
+   */
+  public void testFunction( 
+
+  
 }
