@@ -17,7 +17,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package mergesort;
 
 /**
  *
@@ -27,8 +26,17 @@ public class Sum {
   /**
    * method that checks wheter the element N is contained in array A
    * as a sum of two elements
+   * 
+   * @param N the number representing the sum to search for
+   * @param A the array containing a set of numbers 
    */
-  public void testFunction( 
+  public static void sumFinder(long N, ArrayList<Long> A){
 
+  }
+  
+  private static int binarySearch(long difference, ArrayList<Long> A){
+     
+  } 
+  
   
 }
