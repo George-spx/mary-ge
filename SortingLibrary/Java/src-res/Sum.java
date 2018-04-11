@@ -29,5 +29,20 @@ public class Sum {
    */
   public void testFunction( 
 
+<<<<<<< HEAD
+=======
+  }
+  
+  private static int binarySearch(long difference, ArrayList<Long> A){
+    return recBinarySearch(difference, 0, array.size()-1, A); 
+  } 
+
+  private static int recBinarySearch(int difference, int l, int r, ArrayList<Long> A){
+    if(l > r){
+      return -1; 
+    } 
+  }
+  
+>>>>>>> 47de4496bc51b6285650944857e21dd1c8583213
   
 }
