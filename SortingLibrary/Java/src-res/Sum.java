@@ -1,6 +1,6 @@
   
 /*
- * Copyright (C) 2018 Lorenzo Marietta
+ * Copyright (C) 2018 Lorenzo Marietta, George
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -18,6 +18,8 @@
  */
 package mergesort;
 
+import.java.util.ArrayList;
+
 /**
  *
  * @author Lorenzo Marietta, George
@@ -27,10 +29,11 @@ public class Sum {
    * method that checks wheter the element N is contained in array A
    * as a sum of two elements
    */
-  public void testFunction( 
-
-<<<<<<< HEAD
-=======
+  public boolean void sumFinder(long N, ArrayLyst<Long> A)(
+    for(int i=0; i<A.getSize(); i++){
+		return binarySearch (N - a.get(i), A) != -1;
+	}
+  
   }
   
   private static int binarySearch(long difference, ArrayList<Long> A){
@@ -42,7 +45,6 @@ public class Sum {
       return -1; 
     } 
   }
-  
->>>>>>> 47de4496bc51b6285650944857e21dd1c8583213
+
   
 }
