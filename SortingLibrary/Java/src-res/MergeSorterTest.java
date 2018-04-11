@@ -43,8 +43,6 @@ public class MergeSorterTest {
      */
     @Test
     public void testNullIncreasingSort() throws Exception {
-        System.out.println("null-increasingSort");
-
         Comparator <Long> comparator = initComparator();
         MergeSorter<Long> instance = new MergeSorter<>(comparator, null);
         thrown.expect(SortException.class);
@@ -54,16 +52,14 @@ public class MergeSorterTest {
 
     @Test
     public void testNullDecreasingSort() throws SortException {
-        System.out.println("null-decreasingSort");
         MergeSorter<Long> instance = new MergeSorter<>(initComparator(), null);
         thrown.expect(SortException.class);
         thrown.expectMessage("ArrayList cannot be null");
         instance.increasingSort();
     }
 
-    @Test
+    @Test(timeout = 600000);
     public void testIncreasingSort() throws Exception {
-        System.out.println("increasingSort");
         MergeSorter<Long> instance;
         ArrayList<Long> integers = initIntegersArrayList();
         Comparator <Long> comparator = initComparator();
@@ -75,9 +71,8 @@ public class MergeSorterTest {
     /**
      * Test of decreasingSort method of class MergeSorter.
      */
-    @Test
+    @Test(timeout = 600000);
     public void testDecreasingSort() throws SortException {
-        System.out.println("decreasingSort");
         MergeSorter<Long> instance;
         ArrayList<Long> integers = initIntegersArrayList();
         Comparator <Long> comparator = initComparator();
