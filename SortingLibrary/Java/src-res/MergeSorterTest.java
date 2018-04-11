@@ -58,7 +58,7 @@ public class MergeSorterTest {
         instance.increasingSort();
     }
 
-    @Test(timeout = 600000);
+    @Test(timeout = 600000)
     public void testIncreasingSort() throws Exception {
         MergeSorter<Long> instance;
         ArrayList<Long> integers = initIntegersArrayList();
@@ -71,7 +71,7 @@ public class MergeSorterTest {
     /**
      * Test of decreasingSort method of class MergeSorter.
      */
-    @Test(timeout = 600000);
+    @Test(timeout = 600000)
     public void testDecreasingSort() throws SortException {
         MergeSorter<Long> instance;
         ArrayList<Long> integers = initIntegersArrayList();
