@@ -39,7 +39,9 @@ public class Sum {
   } 
 
   private static int recBinarySearch(int difference, int l, int r, ArrayList<Long> A){
-    if(l 
+    if(l > r){
+      return -1; 
+    } 
   }
   
   
