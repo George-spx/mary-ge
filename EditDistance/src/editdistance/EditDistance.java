@@ -15,9 +15,9 @@ public class EditDistance {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        String s = "prosciutto";
-        String ss = "proscutro";
-        System.out.println(calculateDistance(s, ss));
+        String s = "neo";
+        String ss = "oen";
+        System.out.println(recursive(s, ss));
     }
 
     public static int calculateDistance(String s1, String s2) {
@@ -40,6 +40,27 @@ public class EditDistance {
             }
         }
         return ((s2.length() - bestHit) + (s1.length() - bestHit));
+    }
+
+    public static int recursive(String s1, String s2) {
+        if (s1.isEmpty()) {
+            return s2.length();
+        } else if (s2.isEmpty()) {
+            return s1.length(); 
+        } else {
+            int rem = recursive(s1, rest(s2)) + 1;
+            int add = recursive(rest(s1), s2) + 1;
+            int noope = recursive(rest(s1), rest(s2)) + (s1.charAt(0) == s2.charAt(0) ? 0 : 2);
+            return Math.min(Math.min(add, rem), noope);
+        }
+    }
+
+    private static String rest(String s) {
+        String result = "";
+        for (int i = 1; i < s.length(); i++) {
+            result = result + s.charAt(i);
+        }
+        return result;
     }
 
 }
