@@ -51,8 +51,8 @@ public class SumsApp{
 
   public static void main(String[] args){
     try{
-      BufferedReader readFileSums = new BufferedReader(new FileReader("sums.txt"));
-      BufferedReader readFileInteger = new BufferedReader(new FileReader("integers.csv"));
+      BufferedReader readFileSums = new BufferedReader(new FileReader("../res/sums.txt"));
+      BufferedReader readFileInteger = new BufferedReader(new FileReader("../res/integers.csv"));
       ArrayList<Long> A = new ArrayList<>();
       populateArray(readFileInteger, A);
       orderArray(A);
