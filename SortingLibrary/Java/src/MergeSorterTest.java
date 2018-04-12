@@ -50,16 +50,6 @@ public class MergeSorterTest {
         instance.increasingSort();
     }
 
-    @Test(timeout = 600000)
-    public void testIncreasingSort() throws Exception {
-        MergeSorter<Long> instance;
-        ArrayList<Long> integers = initIntegersArrayList();
-        Comparator <Long> comparator = initComparator();
-        instance = new MergeSorter<>(comparator, integers);
-        instance.increasingSort();
-        assert (isSorted(true, integers));
-    }
-
     /**
      * Test of sort method of class MergeSorter.
      */
