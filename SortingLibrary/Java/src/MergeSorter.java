@@ -49,7 +49,7 @@ public class MergeSorter<T> {
      * Sort all the elements in the ArrayList.
      * @throws mergesort.SortException
      */
-    public void increasingSort() throws SortException{
+    public void sort() throws SortException{
         if(array==null)throw new SortException("ArrayList cannot be null");
         this.length = array.size();
         tempArray = new ArrayList<>();
@@ -61,60 +61,17 @@ public class MergeSorter<T> {
     }
 
     /**
-     * Sort all the element in the ArrayList.
-     * @throws mergesort.SortException
-     */
-    public void decreasingSort() throws SortException {
-        if(array==null)throw new SortException("ArrayList cannot be null");
-        this.length = array.size();
-        tempArray = new ArrayList<>();
-        for (int i = 1; i< length; i *= 2) {
-            for (int j = i; j < length; j += 2 * i) {
-                decreasingMerge(j - i, j, Math.min(j + i, length));
-            }
-        }
-    }
-
-    /**
      * 
      * @param start index of beginning left part to merge.
      * @param middle left part end index, and start right side to merge.
      * @param end right part end index to merge.
      */
-    private void increasingMerge(int start, int middle, int end) {
+    private void merge(int start, int middle, int end) {
         int left = 0;
         int right = 0;
         tempArray.clear();
         while (left < middle - start && right < end - middle) {
             if (comparator.compare(array.get(start + left), array.get(middle + right)) < 0) {
-                tempArray.add(array.get(start + left++));
-            } else {
-                tempArray.add(array.get(middle + right++));
-            }
-        }
-        while (left < middle - start) {
-            tempArray.add(array.get(start + left++));
-        }
-        while (right < end - middle) {
-            tempArray.add(array.get(middle + right++));
-        }
-        for (int n = 0; n < end - start; n++) {
-            array.set(n + start, tempArray.get(n));
-        }
-    }
-
-    /**
-     * 
-     * @param start index of beginning left part to merge.
-     * @param middle left part end index, and start right side to merge.
-     * @param end right part end index to merge.
-     */
-    private void decreasingMerge(int start, int middle, int end) {
-        int left = 0;
-        int right = 0;
-        tempArray.clear();
-        while (left < middle - start && right < end - middle) {
-            if (comparator.compare(array.get(start + left), array.get(middle + right)) > 0) {
                 tempArray.add(array.get(start + left++));
             } else {
                 tempArray.add(array.get(middle + right++));

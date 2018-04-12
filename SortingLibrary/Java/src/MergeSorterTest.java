@@ -39,20 +39,12 @@ public class MergeSorterTest {
     public ExpectedException thrown = ExpectedException.none();
 
     /**
-     * Test of increasingSort method, of class MergeSorter.
+     * Test of sort method, of class MergeSorter, with ArrayList==null.
      */
     @Test
-    public void testNullIncreasingSort() throws Exception {
+    public void testNullSort() throws Exception {
         Comparator <Long> comparator = initComparator();
         MergeSorter<Long> instance = new MergeSorter<>(comparator, null);
-        thrown.expect(SortException.class);
-        thrown.expectMessage("ArrayList cannot be null");
-        instance.increasingSort();
-    }
-
-    @Test
-    public void testNullDecreasingSort() throws SortException {
-        MergeSorter<Long> instance = new MergeSorter<>(initComparator(), null);
         thrown.expect(SortException.class);
         thrown.expectMessage("ArrayList cannot be null");
         instance.increasingSort();
@@ -69,33 +61,24 @@ public class MergeSorterTest {
     }
 
     /**
-     * Test of decreasingSort method of class MergeSorter.
+     * Test of sort method of class MergeSorter.
      */
     @Test(timeout = 600000)
-    public void testDecreasingSort() throws SortException {
+    public void testSort() throws SortException {
         MergeSorter<Long> instance;
         ArrayList<Long> integers = initIntegersArrayList();
         Comparator <Long> comparator = initComparator();
         instance = new MergeSorter<>(comparator, integers);
-        instance.decreasingSort();
-        assert (isSorted(false, integers));
+        instance.sort();
+        assert (isSorted(integers));
     }
 
-    private boolean isSorted(boolean increasing, ArrayList array) {
+    private boolean isSorted( ArrayList array) {
         int size = array.size() - 1;
         Comparator c = initComparator();
-        if (increasing) {
-            for (int i = 0; i < size; i++) {
-                if (c.compare(array.get(i), array.get(i + 1)) > 0) {
-                    return false;
-                }
-            }
-        } else {
-            for (int i = 0; i < size; i++) {
-                if (c.compare(array.get(i), array.get(i + 1)) < 0) {
-                    return false;
-                }
-            }
+        for (int i = 0; i < size; i++) {
+            if (c.compare(array.get(i), array.get(i + 1)) > 0) {
+            return false;
         }
         return true;
     }
