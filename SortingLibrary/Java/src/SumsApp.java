@@ -40,10 +40,8 @@ public class SumsApp{
         }else return 0;
       }
     };
-
-    MergeSorter <Long> mergeSorter = new MergeSorter(comparator, A);
     try{
-      mergeSorter.increasingSort();
+      Sort.<Long>mergeSort(A, comparator);
     }catch(SortException e){
       System.out.println(e);
     }
