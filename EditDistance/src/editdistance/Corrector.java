@@ -15,7 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package editdistance;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -34,9 +33,9 @@ public class Corrector {
 
     public static void main(String[] args) {
         try {
-            Corrector c = new Corrector("src/editdistance/dictionary.txt",
-                    "src/editdistance/correctme.txt",
-                    "src/editdistance/corrected.txt");
+            Corrector c = new Corrector("dictionary.txt",
+                    "correctme.txt",
+                    "corrected.txt");
             c.correct();
         } catch (IOException | InterruptedException ex) {
             Logger.getLogger(Corrector.class.getName()).log(Level.SEVERE, null, ex);
@@ -72,32 +71,13 @@ public class Corrector {
         int size = textArray.size()/4;
         int section = size;
         
-        Performer p1 = new Performer(textArray, dictionaryArray,0,section);
-        Performer p2 = new Performer(textArray, dictionaryArray,section+1,section*2);
-        Performer p3 = new Performer(textArray, dictionaryArray,section*2+1,section*3);
-        Performer p4 = new Performer(textArray, dictionaryArray,section*3+1,section*4+size%4-1);
-        
+        Performer p1 = new Performer(textArray, dictionaryArray,0,textArray.size() -1);/*
+       */ 
         p1.start();
-        p2.start();
-        p3.start();
-        p4.start();
-        
         p1.join();
-        p2.join();
-        p3.join();
-        p4.join();
         
         for(int i=p1.getCorrectedText().size()-1;i>=0;i--){
             newText.write("("+p1.getCorrectedText().get(i)+")");
-        }
-        for(int i=p2.getCorrectedText().size()-1;i>=0;i--){
-            newText.write("("+p2.getCorrectedText().get(i)+")");
-        }
-        for(int i=p3.getCorrectedText().size()-1;i>=0;i--){
-            newText.write("("+p3.getCorrectedText().get(i)+")");
-        }
-        for(int i=p4.getCorrectedText().size()-1;i>=0;i--){
-            newText.write("("+p4.getCorrectedText().get(i)+")");
         }
         closeFile();
     }
