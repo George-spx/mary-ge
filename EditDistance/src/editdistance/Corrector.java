@@ -15,6 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
+package editdistance;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -33,9 +34,9 @@ public class Corrector {
 
     public static void main(String[] args) {
         try {
-            Corrector c = new Corrector("dictionary.txt",
-                    "correctme.txt",
-                    "corrected.txt");
+            Corrector c = new Corrector("src/editdistance/dictionary.txt",
+                    "src/editdistance/correctme.txt",
+                    "src/editdistance/corrected.txt");
             c.correct();
         } catch (IOException | InterruptedException ex) {
             Logger.getLogger(Corrector.class.getName()).log(Level.SEVERE, null, ex);
@@ -52,7 +53,7 @@ public class Corrector {
     private ArrayList<String> dictionaryArray;
     private ArrayList<String> textArray;
     
-    public static int index;
+    private int size ;
 
     public Corrector(String dictionaryPath, String textPath, String newTextPath) {
         this.dictionaryPath = dictionaryPath;
@@ -67,21 +68,53 @@ public class Corrector {
         
         populateDictionaryArray();
         populateTextArray();
-        
-        int size = textArray.size()/4;
-        int section = size;
-        
-        Performer p1 = new Performer(textArray, dictionaryArray,0,textArray.size() -1);/*
-       */ 
-        p1.start();
-        p1.join();
-        
-        for(int i=p1.getCorrectedText().size()-1;i>=0;i--){
-            newText.write("("+p1.getCorrectedText().get(i)+")");
+        size = textArray.size();
+        if(size<=20){
+            run1Thread();
+        }else if(size<=40){
+            run2Thread();
+        }else{
+            run4Thread();
         }
+        
         closeFile();
     }
-    
+    private void run1Thread() throws InterruptedException{
+        Performer p1 = new Performer(textArray, dictionaryArray,0,size-1);
+        p1.start();
+        p1.join();
+        write(p1.getCorrectedText());
+    }
+    private void run2Thread() throws InterruptedException{
+        int section=size/2;
+        Performer p1 = new Performer(textArray, dictionaryArray,0,section);
+        Performer p2 = new Performer(textArray, dictionaryArray,section+1,section*2+size%2-1);
+        p1.start();
+        p2.start();
+        p1.join();
+        p2.join();
+        write(p1.getCorrectedText());
+        write(p2.getCorrectedText());
+    }
+    private void run4Thread() throws InterruptedException{
+        int section=size/4;
+        Performer p1 = new Performer(textArray, dictionaryArray,0,section);
+        Performer p2 = new Performer(textArray, dictionaryArray,section+1,section*2);
+        Performer p3 = new Performer(textArray, dictionaryArray,section*2+1,section*3);
+        Performer p4 = new Performer(textArray, dictionaryArray,section*3+1,section*4+size%4-1);
+        p1.start();
+        p2.start();
+        p3.start();
+        p4.start();
+        p1.join();
+        p2.join();
+        p3.join();
+        p4.join();
+        write(p1.getCorrectedText());
+        write(p2.getCorrectedText());
+        write(p3.getCorrectedText());
+        write(p4.getCorrectedText());
+    }
     
     private void populateDictionaryArray() {
         String s;
@@ -89,7 +122,12 @@ public class Corrector {
             dictionaryArray.add(s);
         }
     }
-
+    private void write(ArrayList<String> a){
+        for(int i=0;i<a.size();i++){
+            newText.write(a.get(i)+"\n");
+        }
+    }
+    
     private void populateTextArray() {
         String s;
         while ((s = readWord()) != null) {
