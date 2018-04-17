@@ -3,9 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-import java.io.BufferedReader;
-import java.io.PrintWriter;
+package editdistance;
 
 /**
  *
@@ -15,6 +13,9 @@ public class EditDistance {
 
     public static int iterativeStringDistance(String s1, String s2) {
         int bestHit = 0;
+        s1=s1.toLowerCase();
+        s2=s2.toLowerCase();
+        
         for (int i = 0; (i < s1.length()) && (bestHit <= s2.length()/2); i++) {
             int currentHit = 0;
             int lastHitIndex = -1;

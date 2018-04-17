@@ -15,6 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
+package editdistance;
 
 import java.util.ArrayList;
 
@@ -26,10 +27,9 @@ public class Performer extends Thread {
 
     private final ArrayList<String> textArray;
     private final ArrayList<String> dictionaryArray;
-    private ArrayList<ArrayList> correctedText;
+    private final ArrayList<String> correctedText;
     private int start;
-    private int end;
-    private boolean finisced = false;
+    private final int end;
 
     public Performer(ArrayList a, ArrayList b, int start , int end) {
         textArray = a;
@@ -47,33 +47,26 @@ public class Performer extends Thread {
             boolean flag = true;
             int lastEdit;
             int tmpLastEdit = -1;
-            ArrayList<String> corrected = new ArrayList<>();
+            String corrected=t+" -->(";
             for (int j = 0; flag && j < dictionaryArray.size(); j++) {
-                //System.out.print("\n " + dictionaryArray.get(j));
                 if ((lastEdit = EditDistance.iterativeStringDistance(t, dictionaryArray.get(j))) <= tmpLastEdit
                         || tmpLastEdit == -1) {
                     if (lastEdit < tmpLastEdit) {
-                        corrected.clear();
+                        corrected= t+" -->(";
                     }
                     tmpLastEdit = lastEdit;
-                    corrected.add(dictionaryArray.get(j));
+                    corrected=corrected+"-"+dictionaryArray.get(j);
                     if (lastEdit == 0) {
                         flag = false;
                     }
                 }
             }
+            corrected= corrected+")";
             correctedText.add(corrected);
         }
     }
 
     public ArrayList getCorrectedText() {
         return correctedText;
-    }
-
-    public int getStart() {
-        return start;
-    }
-    public boolean getFinished(){
-        return finisced;
     }
 }
