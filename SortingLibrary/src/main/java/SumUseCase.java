@@ -27,6 +27,7 @@ public class SumUseCase{
     System.out.println("Array populated in: "+duration+"s");
 
   }
+
   /**
    * for each number in file checks if A contains two numbers that summed give the taken number 
    * and prints true/false
@@ -50,6 +51,7 @@ public class SumUseCase{
     System.out.println("Sums checked in: "+duration+"s");
 
   }
+  
   /**
    * Instantiates a comparator between Long
    * @return the previously instantiated comparator
@@ -68,6 +70,7 @@ public class SumUseCase{
     };
     return comparator;
   }
+
 /**
  * orders the array using the mergeSort: complexity nlog(n)
  * @param A the ArrayList to order
@@ -86,6 +89,7 @@ public class SumUseCase{
     long duration = endTime - startTime;
     System.out.println("Array ordered in: "+duration+"s");
   }
+
   /**
    * gets the current time in milliseconds from javaVM
    * @return the present time in seconds

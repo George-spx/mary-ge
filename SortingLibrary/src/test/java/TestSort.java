@@ -54,6 +54,84 @@ public class TestSort{
     Sort.<Integer>insertionSort(null, comparator);
   }
 
+
+  @Test
+  public void testInsertionSortSameElement()throws SortException{
+    Comparator <Integer> comparator = initializeIntegerComparator();
+    ArrayList <Integer> expectedArray = new ArrayList<Integer>();
+    ArrayList <Integer> testArray = new ArrayList<Integer>();
+    expectedArray.add(3);
+    expectedArray.add(3);
+    expectedArray.add(3);
+    expectedArray.add(3);
+
+    testArray.add(3);
+    testArray.add(3);
+    testArray.add(3);
+    testArray.add(3);
+    Sort.<Integer>insertionSort(testArray, comparator);
+   
+    assertEquals(testArray, expectedArray); 
+  }
+
+  @Test
+  public void testMergeSortSameElement()throws SortException{
+    Comparator <Integer> comparator = initializeIntegerComparator();
+    ArrayList <Integer> expectedArray = new ArrayList<Integer>();
+    ArrayList <Integer> testArray = new ArrayList<Integer>();
+    expectedArray.add(3);
+    expectedArray.add(3);
+    expectedArray.add(3);
+    expectedArray.add(3);
+
+    testArray.add(3);
+    testArray.add(3);
+    testArray.add(3);
+    testArray.add(3);
+    Sort.<Integer>mergeSort(testArray, comparator);
+   
+    assertEquals(testArray, expectedArray); 
+  }
+
+  @Test
+  public void testInsertionSort()throws SortException{
+    Comparator <Integer> comparator = initializeIntegerComparator();
+    ArrayList <Integer> expectedArray = new ArrayList<Integer>();
+    ArrayList <Integer> testArray = new ArrayList<Integer>();
+    expectedArray.add(2);
+    expectedArray.add(2);
+    expectedArray.add(52);
+    expectedArray.add(256);
+
+    testArray.add(52);
+    testArray.add(2);
+    testArray.add(256);
+    testArray.add(2);
+    Sort.<Integer>insertionSort(testArray, comparator);
+   
+    assertEquals(testArray, expectedArray); 
+  }
+
+  @Test
+  public void testMergeSort()throws SortException{
+    Comparator <Integer> comparator = initializeIntegerComparator();
+    ArrayList <Integer> expectedArray = new ArrayList<Integer>();
+    ArrayList <Integer> testArray = new ArrayList<Integer>();
+    expectedArray.add(2);
+    expectedArray.add(2);
+    expectedArray.add(52);
+    expectedArray.add(256);
+
+    testArray.add(52);
+    testArray.add(2);
+    testArray.add(256);
+    testArray.add(2);
+    Sort.<Integer>mergeSort(testArray, comparator);
+   
+    assertEquals(testArray, expectedArray); 
+  }
+
+
   public Comparator<Integer> initializeIntegerComparator(){
     Comparator<Integer> comparator = new Comparator<Integer>(){
       @Override
