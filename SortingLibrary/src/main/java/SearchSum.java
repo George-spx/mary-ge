@@ -46,7 +46,7 @@ public class SearchSum{
   * @param A the array containing the elements 
   * @return if A contains the element: the index of the element, -1 otherwise
   */
-  private static int binarySearch(long difference, ArrayList<Long> A){
+  public static int binarySearch(long difference, ArrayList<Long> A){
     return recBinarySearch(difference, 0, A.size()-1, A); 
   } 
 

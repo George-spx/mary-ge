@@ -49,7 +49,7 @@ public class Performer extends Thread {
             int tmpLastEdit = -1;
             ArrayList<String> corrected = new ArrayList<>();
             for (int j = 0; flag && j < dictionaryArray.size(); j++) {
-                System.out.print("\n " + dictionaryArray.get(j));
+                //System.out.print("\n " + dictionaryArray.get(j));
                 if ((lastEdit = EditDistance.iterativeStringDistance(t, dictionaryArray.get(j))) <= tmpLastEdit
                         || tmpLastEdit == -1) {
                     if (lastEdit < tmpLastEdit) {
