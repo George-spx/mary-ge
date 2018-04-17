@@ -5,24 +5,18 @@
  */
 package editdistance;
 
+import java.io.BufferedReader;
+import java.io.PrintWriter;
+
 /**
  *
  * @author Lorenzo Marietta
  */
 public class EditDistance {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        String s = "neo";
-        String ss = "oen";
-        System.out.println(recursive(s, ss));
-    }
-
-    public static int calculateDistance(String s1, String s2) {
+    public static int iterativeStringDistance(String s1, String s2) {
         int bestHit = 0;
-        for (int i = 0; (i < s1.length()) && (bestHit <= s2.length()); i++) {
+        for (int i = 0; (i < s1.length()) && (bestHit <= s2.length()/2); i++) {
             int currentHit = 0;
             int lastHitIndex = -1;
             for (int j = 0, k = i; k < s1.length() && j < s2.length(); j++) {
@@ -42,15 +36,15 @@ public class EditDistance {
         return ((s2.length() - bestHit) + (s1.length() - bestHit));
     }
 
-    public static int recursive(String s1, String s2) {
+    public static int stringDistance(String s1, String s2) {
         if (s1.isEmpty()) {
             return s2.length();
         } else if (s2.isEmpty()) {
-            return s1.length(); 
+            return s1.length();
         } else {
-            int rem = recursive(s1, rest(s2)) + 1;
-            int add = recursive(rest(s1), s2) + 1;
-            int noope = recursive(rest(s1), rest(s2)) + (s1.charAt(0) == s2.charAt(0) ? 0 : 2);
+            int rem = stringDistance(s1, rest(s2)) + 1;
+            int add = stringDistance(rest(s1), s2) + 1;
+            int noope = stringDistance(rest(s1), rest(s2)) + (s1.charAt(0) == s2.charAt(0) ? 0 : 2);
             return Math.min(Math.min(add, rem), noope);
         }
     }
@@ -62,5 +56,4 @@ public class EditDistance {
         }
         return result;
     }
-
 }
