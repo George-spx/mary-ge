@@ -33,9 +33,9 @@ public class Corrector {
 
     public static void main(String[] args) {
         try {
-            Corrector c = new Corrector("../../resources/dictionary.txt",
-                    "../../resources/correctme.txt",
-                    "../../resources/corrected.txt");
+            Corrector c = new Corrector("../resources/dictionary.txt",
+                    "../resources/correctme.txt",
+                    "../resources/corrected.txt");
             c.correct();
         } catch (IOException | InterruptedException ex) {
             Logger.getLogger(Corrector.class.getName()).log(Level.SEVERE, null, ex);
@@ -67,7 +67,9 @@ public class Corrector {
         
         populateDictionaryArray();
         populateTextArray();
+        
         size = textArray.size();
+        
         if(size<=20){
             run1Thread();
         }else if(size<=40){

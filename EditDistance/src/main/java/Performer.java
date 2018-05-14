@@ -48,8 +48,7 @@ public class Performer extends Thread {
             int tmpLastEdit = -1;
             String corrected=t+" -->(";
             for (int j = 0; flag && j < dictionaryArray.size(); j++) {
-              try{
-                if ((lastEdit = EditDistance.iterativeStringDistance(t, dictionaryArray.get(j))) <= tmpLastEdit
+                if ((lastEdit = EditDistance.iterativeEditDistance(t, dictionaryArray.get(j))) <= tmpLastEdit
                         || tmpLastEdit == -1) {
                     if (lastEdit < tmpLastEdit) {
                         corrected= t+" -->(";
@@ -60,9 +59,6 @@ public class Performer extends Thread {
                         flag = false;
                     }
                 }
-              }catch (EditDistanceException e){
-                System.out.println(e);
-              }
             }
             corrected= corrected+")";
             correctedText.add(corrected);
