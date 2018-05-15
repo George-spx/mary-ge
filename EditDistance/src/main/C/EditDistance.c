@@ -12,6 +12,13 @@
 
    int iterativeEditDistance(char* s1, char* s2) {
         int bestHit = 0;
+        for(int i = 0;i < strlen(s1); i++){
+          tolower(s1[i]);
+        }
+        for(int i = 0;i < strlen(s2); i++){
+          tolower(s2[i]);
+        }
+
        // s1=s1.toLowerCase();
         //s2=s2.toLowerCase();
        int lS1 = strlen(s1); 
