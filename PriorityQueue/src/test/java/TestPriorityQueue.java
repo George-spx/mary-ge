@@ -14,8 +14,8 @@ public class TestPriorityQueue{
 
   @Test
   public void testPriorityQueueCorrectness() throws PriorityQueueException{
-    Comparator <QueueElement<String,Integer>> comparator = initializeIntegerComparator();
-    PriorityQueue<String,Integer> priorityQueue = new PriorityQueue<String,Integer>(comparator); 
+    Comparator <QueueNode<Integer, String>> comparator = initializeIntegerComparator();
+    PriorityQueue<Integer, String> priorityQueue = new PriorityQueue<Integer, String>(comparator); 
     ArrayList<String> expectedArray = new ArrayList<String>();
     ArrayList<String> resultedArray = new ArrayList<String>();
     expectedArray.add("Roberta");
@@ -24,17 +24,17 @@ public class TestPriorityQueue{
     expectedArray.add("George");
     expectedArray.add("Maily");
 
-    priorityQueue.push(new QueueElement("George", 4));
-    priorityQueue.push(new QueueElement("Giulia", 7));
-    priorityQueue.push(new QueueElement("Roberta", 12));
-    priorityQueue.push(new QueueElement("Maily", 1));
-    priorityQueue.push(new QueueElement("Francesco", 9));
+    priorityQueue.enqueue(new QueueNode("George", 4));
+    priorityQueue.enqueue(new QueueNode("Giulia", 7));
+    priorityQueue.enqueue(new QueueNode("Roberta", 12));
+    priorityQueue.enqueue(new QueueNode("Maily", 1));
+    priorityQueue.enqueue(new QueueNode("Francesco", 9));
 
     boolean stop = false;
     while(!stop){
       try{
-        QueueElement<String,Integer> pop = priorityQueue.pop();
-        resultedArray.add(pop.element);
+        QueueNode<Integer, String> dequeue = priorityQueue.dequeue();
+        resultedArray.add(dequeue.value);
       }catch(PriorityQueueException e){
         stop = true;
       }
@@ -44,43 +44,43 @@ public class TestPriorityQueue{
   
   @Test
   public void testPopOnEmptyQueue() throws PriorityQueueException{
-    Comparator <QueueElement<String,Integer>> comparator = initializeIntegerComparator();
-    PriorityQueue<String,Integer> priorityQueue = new PriorityQueue<String,Integer>(comparator); 
+    Comparator <QueueNode<Integer, String>> comparator = initializeIntegerComparator();
+    PriorityQueue<Integer, String> priorityQueue = new PriorityQueue<Integer, String>(comparator); 
     thrown.expect(PriorityQueueException.class);
-    thrown.expectMessage("Cannot pop, Queue is empty!");
+    thrown.expectMessage("Cannot dequeue, Queue is empty!");
 
-    priorityQueue.pop();
+    priorityQueue.dequeue();
   }
 
   @Test
   public void testAddNullElement() throws PriorityQueueException{
-    Comparator <QueueElement<String,Integer>> comparator = initializeIntegerComparator();
-    PriorityQueue<String,Integer> priorityQueue = new PriorityQueue<String,Integer>(comparator); 
+    Comparator <QueueNode<Integer, String>> comparator = initializeIntegerComparator();
+    PriorityQueue<Integer, String> priorityQueue = new PriorityQueue<Integer, String>(comparator); 
     thrown.expect(PriorityQueueException.class);
     thrown.expectMessage("Element cannot be null");
 
-    priorityQueue.push(null);
+    priorityQueue.enqueue(null);
   }
 
   @Test
   public void testAddSamePriorityTwice() throws PriorityQueueException{
-    Comparator <QueueElement<String,Integer>> comparator = initializeIntegerComparator();
-    PriorityQueue<String,Integer> priorityQueue = new PriorityQueue<String,Integer>(comparator); 
+    Comparator <QueueNode<Integer, String>> comparator = initializeIntegerComparator();
+    PriorityQueue<Integer, String> priorityQueue = new PriorityQueue<Integer, String>(comparator); 
     ArrayList<String> expectedArray = new ArrayList<String>();
     ArrayList<String> resultedArray = new ArrayList<String>();
     expectedArray.add("Roberta");
     expectedArray.add("Marco");
     expectedArray.add("Francesco");
 
-    priorityQueue.push(new QueueElement("Roberta", 12));
-    priorityQueue.push(new QueueElement("Francesco", 9));
-    priorityQueue.push(new QueueElement("Marco", 12));
+    priorityQueue.enqueue(new QueueNode("Roberta", 12));
+    priorityQueue.enqueue(new QueueNode("Francesco", 9));
+    priorityQueue.enqueue(new QueueNode("Marco", 12));
 
     boolean stop = false;
     while(!stop){
       try{
-        QueueElement<String,Integer> pop = priorityQueue.pop();
-        resultedArray.add(pop.element);
+        QueueNode<Integer, String> dequeue = priorityQueue.dequeue();
+        resultedArray.add(dequeue.value);
       }catch(PriorityQueueException e){
         stop = true;
       }
@@ -90,8 +90,8 @@ public class TestPriorityQueue{
 
   @Test
   public void testAddOnlySamePriority() throws PriorityQueueException{
-    Comparator <QueueElement<String,Integer>> comparator = initializeIntegerComparator();
-    PriorityQueue<String,Integer> priorityQueue = new PriorityQueue<String,Integer>(comparator); 
+    Comparator <QueueNode<Integer, String>> comparator = initializeIntegerComparator();
+    PriorityQueue<Integer, String> priorityQueue = new PriorityQueue<Integer, String>(comparator); 
     ArrayList<String> expectedArray = new ArrayList<String>();
     ArrayList<String> resultedArray = new ArrayList<String>();
     expectedArray.add("Roberta");
@@ -100,17 +100,17 @@ public class TestPriorityQueue{
     expectedArray.add("Lucia");
     expectedArray.add("Marco");
 
-    priorityQueue.push(new QueueElement("Roberta", 12));
-    priorityQueue.push(new QueueElement("Francesco", 12));
-    priorityQueue.push(new QueueElement("Genna", 12));
-    priorityQueue.push(new QueueElement("Lucia", 12));
-    priorityQueue.push(new QueueElement("Marco", 12));
+    priorityQueue.enqueue(new QueueNode("Roberta", 12));
+    priorityQueue.enqueue(new QueueNode("Francesco", 12));
+    priorityQueue.enqueue(new QueueNode("Genna", 12));
+    priorityQueue.enqueue(new QueueNode("Lucia", 12));
+    priorityQueue.enqueue(new QueueNode("Marco", 12));
 
     boolean stop = false;
     while(!stop){
       try{
-        QueueElement<String,Integer> pop = priorityQueue.pop();
-        resultedArray.add(pop.element);
+        QueueNode<Integer, String> dequeue = priorityQueue.dequeue();
+        resultedArray.add(dequeue.value);
       }catch(PriorityQueueException e){
         stop = true;
       }
@@ -120,8 +120,8 @@ public class TestPriorityQueue{
 
   @Test
   public void testAddHighestPriorityLast() throws PriorityQueueException{
-    Comparator <QueueElement<String,Integer>> comparator = initializeIntegerComparator();
-    PriorityQueue<String,Integer> priorityQueue = new PriorityQueue<String,Integer>(comparator); 
+    Comparator <QueueNode<Integer, String>> comparator = initializeIntegerComparator();
+    PriorityQueue<Integer, String> priorityQueue = new PriorityQueue<Integer, String>(comparator); 
     ArrayList<String> expectedArray = new ArrayList<String>();
     ArrayList<String> resultedArray = new ArrayList<String>();
     expectedArray.add("Roberta");
@@ -130,17 +130,17 @@ public class TestPriorityQueue{
     expectedArray.add("Lucia");
     expectedArray.add("Marco");
 
-    priorityQueue.push(new QueueElement("Francesco", 9));
-    priorityQueue.push(new QueueElement("Genna", 2));
-    priorityQueue.push(new QueueElement("Lucia", 2));
-    priorityQueue.push(new QueueElement("Marco", 1));
-    priorityQueue.push(new QueueElement("Roberta", 13));
+    priorityQueue.enqueue(new QueueNode("Francesco", 9));
+    priorityQueue.enqueue(new QueueNode("Genna", 2));
+    priorityQueue.enqueue(new QueueNode("Lucia", 2));
+    priorityQueue.enqueue(new QueueNode("Marco", 1));
+    priorityQueue.enqueue(new QueueNode("Roberta", 13));
 
     boolean stop = false;
     while(!stop){
       try{
-        QueueElement<String,Integer> pop = priorityQueue.pop();
-        resultedArray.add(pop.element);
+        QueueNode<Integer, String> dequeue = priorityQueue.dequeue();
+        resultedArray.add(dequeue.value);
       }catch(PriorityQueueException e){
         stop = true;
       }
@@ -148,14 +148,11 @@ public class TestPriorityQueue{
     assertEquals(expectedArray, resultedArray);
   }
 
-  public Comparator<QueueElement<String,Integer>> initializeIntegerComparator(){
-    Comparator<QueueElement<String,Integer>> comparator = new Comparator<QueueElement<String,Integer>>(){
+  public Comparator<QueueNode<Integer, String>> initializeIntegerComparator(){
+    Comparator<QueueNode<Integer, String>> comparator = new Comparator<QueueNode<Integer, String>>(){
       @Override
-      public int compare(QueueElement<String,Integer> el1, QueueElement<String,Integer> el2){
-        if(el1.priority-el2.priority == 0){
-          return el2.c - el1.c; 
-        }else
-        return el1.priority - el2.priority;
+      public int compare(QueueNode<Integer, String> el1, QueueNode<Integer, String> el2){
+        return el1.key - el2.key;
       }
     };  
     return comparator;
