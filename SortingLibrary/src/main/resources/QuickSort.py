@@ -1,17 +1,17 @@
 #read items from file and quicksort
 def quicksort(integers, i, n):
-    if(len(integers) > 1):
-        p = partition(integers, i , len(integers)-1)
-        if(p > 2):
+    if((n - i) > 0):
+        p = partition(integers, i , n)
+        if(p >= 2):
             quicksort(integers, i, p-1)
         else:
-            quicksort(integers, p+1, len(integers)-1)
+            quicksort(integers, p+1, n)
 
 def partition(integers, s, n):
     pivot = integers[s]
-    i = s +1
+    i = s + 1
     j = n
-    while(i <= j):
+    while(i < j):
         if(integers[i] < pivot):
             i = i + 1
         elif(integers[j] > pivot):
@@ -28,7 +28,8 @@ def partition(integers, s, n):
 
 file_integers = open('integers.csv','r')
 integers = file_integers.readlines()
-quicksort(integers, 1, len(integers))
-print(integers)
-
-
+quicksort(integers, 0, len(integers)-1)
+i = 0
+while(i < 10):
+    print(integers[i])
+    i = i + 1
