@@ -1,27 +1,29 @@
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.io.*;
 
 /**
  * @author George
  */
 public class PriorityQueue <T,E>{
-  private ArrayList<QueueElement<T,E>> heapQueue = null;
-  private Comparator <QueueElement<T,E>> comparator;
-  private int c = 0;
+  private ArrayList<QueueNode<T,E>> heapQueue = null;
+  private HashMap<T, Integer> nodePosition;
+  private Comparator <QueueNode<T,E>> comparator;
 
   /**
    *
    * instantiates the arrayList heapQueue and the comparator
    * @param comparator the comparator used to order the heap
    */
-  public PriorityQueue(Comparator <QueueElement<T,E>> comparator){
+  public PriorityQueue(Comparator <QueueNode<T,E>> comparator){
     this.comparator = comparator;
     this.heapQueue = new ArrayList<>();
+    nodePosition = new HashMap<T, Integer>();
   }
 
 
-  public ArrayList<QueueElement<T,E>> getQueue(){
+  public ArrayList<QueueNode<T,E>> getQueue(){
     return this.heapQueue;
   }
 
@@ -30,14 +32,31 @@ public class PriorityQueue <T,E>{
    * add new element to the queue
    * @param element the element to be added
    */
-  public void push(QueueElement<T,E> element)throws PriorityQueueException{
+  public void enqueue(QueueNode<T,E> element)throws PriorityQueueException{
     if(element == null){
       throw new PriorityQueueException("Element cannot be null");
     }else{
-      element.c = c++;
       heapQueue.add(element);
+      nodePosition.put(element.key, heapQueue.size()-1);
       up(heapQueue.size()-1);
     }
+  }
+
+  public void decreaseKey(T newKey, T oldKey) throws PriorityQueueException{
+    if(nodePosition.containsKey(oldKey)){
+      //if(comparator.compare(newKey,oldKey) < 0){
+        int p = nodePosition.get(oldKey);
+        heapQueue.get(p).key = newKey; 
+        nodePosition.remove(oldKey);
+        nodePosition.put(newKey, p);
+        heapify(p);
+      //}
+      //else{
+        //throw new PriorityQueueException("New key is bigger than old Key");
+      //}
+    }else{
+      throw new PriorityQueueException("Key not found in queue");
+    } 
   }
 
   /**
@@ -45,15 +64,24 @@ public class PriorityQueue <T,E>{
    * returns and removes the element with the max priority from the queue
    * @return the element with max priority(root element)
    */
-  public QueueElement pop() throws PriorityQueueException{
+  public QueueNode dequeue() throws PriorityQueueException{
     if(heapQueue.size() == 0){
-      throw new PriorityQueueException("Cannot pop, Queue is empty!");
+      throw new PriorityQueueException("Cannot extract, Queue is empty!");
     }
-    QueueElement<T,E> topQueue = heapQueue.get(0);
+    QueueNode<T,E> topQueue = heapQueue.get(0);
+    nodePosition.remove(topQueue.key);
     heapQueue.set(0, heapQueue.get(heapQueue.size()-1));
     heapQueue.remove(heapQueue.size()-1);
     heapify(0);
     return topQueue;
+  }
+
+  public void hashUpdateIndexes(int i1, int i2){
+    nodePosition.remove(heapQueue.get(i2).key);
+    nodePosition.remove(heapQueue.get(i1).key);
+
+    nodePosition.put(heapQueue.get(i2).key, i2);
+    nodePosition.put(heapQueue.get(i1).key, i1);
   }
 
   /**
@@ -148,7 +176,8 @@ public class PriorityQueue <T,E>{
    * @param p2 position 2
    */
   private void swap(int p1, int p2){
-      QueueElement<T,E> temp = heapQueue.get(p1);
+      hashUpdateIndexes(p1, p2);
+      QueueNode<T,E> temp = heapQueue.get(p1);
       heapQueue.set(p1, heapQueue.get(p2)); 
       heapQueue.set(p2, temp); 
   }
