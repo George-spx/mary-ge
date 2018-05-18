@@ -22,7 +22,18 @@ public class PriorityQueue <T,E>{
     nodePosition = new HashMap<T, Integer>();
   }
 
+  public E getValue(T key){
+    if(nodePosition.containsKey(key)){
+      return (heapQueue.get(nodePosition.get(key)).value);
+    }
+    else return null;
+  }
 
+  public boolean contains(T key){
+    if(nodePosition.containsKey(key)){
+      return true;
+    }else return false;
+  }
   public ArrayList<QueueNode<T,E>> getQueue(){
     return this.heapQueue;
   }
@@ -42,14 +53,12 @@ public class PriorityQueue <T,E>{
     }
   }
 
-  public void decreaseKey(T newKey, T oldKey) throws PriorityQueueException{
-    if(nodePosition.containsKey(oldKey)){
+  public void decreaseKey(T key, E newValue) throws PriorityQueueException{
+    if(nodePosition.containsKey(key)){
       //if(comparator.compare(newKey,oldKey) < 0){
-        int p = nodePosition.get(oldKey);
-        heapQueue.get(p).key = newKey; 
-        nodePosition.remove(oldKey);
-        nodePosition.put(newKey, p);
-        heapify(p);
+        int p = nodePosition.get(key);
+        heapQueue.get(p).value = newValue; 
+        up(p);
       //}
       //else{
         //throw new PriorityQueueException("New key is bigger than old Key");
@@ -59,12 +68,18 @@ public class PriorityQueue <T,E>{
     } 
   }
 
+  public boolean isEmpty(){
+    if(heapQueue.size() == 0){
+      return true;
+    }else return false;
+  }
+
   /**
    *
    * returns and removes the element with the max priority from the queue
    * @return the element with max priority(root element)
    */
-  public QueueNode dequeue() throws PriorityQueueException{
+  public QueueNode<T,E> dequeue() throws PriorityQueueException{
     if(heapQueue.size() == 0){
       throw new PriorityQueueException("Cannot extract, Queue is empty!");
     }

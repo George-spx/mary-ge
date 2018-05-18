@@ -5,6 +5,7 @@ import java.util.*;
  * @author George Andrei Varga
  */
 public class Graph<T, E extends Number>{
+  private final int inf = -23;
   HashMap<T, Vertex<T,E>> graph;
 
   /**
@@ -36,8 +37,7 @@ public class Graph<T, E extends Number>{
   public void addVertex(T key) throws GraphException{
     if(graph.containsKey(key)){
       graph.put(key, new Vertex<>(key));
-    }else throw new GraphException("Vertex already exists");
-
+    }
   }
 
   /**
@@ -155,10 +155,69 @@ public class Graph<T, E extends Number>{
     } 
   }
 
-  public void primAlgorithm(){
-  
+  public Comparator<QueueNode<T,E>> initializeEComparator(){
+    Comparator<QueueNode<T,E>> comparator = new Comparator<QueueNode<T,E>>(){
+      @Override
+      public int compare(QueueNode<T,E> e1, QueueNode<T,E> e2){
+        float diff = e1.value.floatValue() - e2.value.floatValue();
+        if(diff < 0){
+          return -1;
+        }else if (diff > 0){
+          return 1;
+        }else return 0;
+      }
+    };
+    return comparator;
   }
 
+  public PriorityQueue<T,E> populateQueue(Comparator<QueueNode<T,E>> comparator){
+    PriorityQueue<T,E> Q = new PriorityQueue<>(comparator);
+    for(T key: graph.keySet()){
+      Set<Edge<T,E>> edges = graph.get(key).adjVertices;
+      if(edges != null){
+        for(Edge<T,E> edge : edges){
+          try{
+            edge.value = (E)(Float)Float.MAX_VALUE;
+          Q.enqueue(edge); 
+          }catch(Exception e){
+            System.out.println(e);
+          }
+        }
+      } 
+    }
+    return Q;
+  }
+
+  public void initializeDistance(){
+    for(T key: graph.keySet()){
+      graph.get(key).d = inf;
+    } 
+  }
+
+  public Graph<T,E> primAlgorithm(Vertex<T,E> s){
+    Comparator<QueueNode<T,E>> comparator = initializeEComparator();
+    Graph <T,E> MST = new Graph<>();
+    PriorityQueue<T,E> Q = populateQueue(comparator);
+    initializeDistance();
+    try{
+      Q.decreaseKey(s.key, (E)(Float)(float)0);
+    }catch(Exception e){}
+    while(!Q.isEmpty()){
+      try{
+        QueueNode<T,E> u = Q.dequeue();
+        Set<Edge<T,E>> adjU = graph.get(u.key).adjVertices;
+        for(QueueNode<T,E> edge : adjU){
+          if(Q.contains(edge.key)){
+            if(comparator.compare(u,edge) < 0){
+            
+            } 
+          }
+        }
+      }catch(Exception e){
+      }
+    }
+  return MST;
+  }
   
 
 }
