@@ -10,8 +10,6 @@ public class GraphUseCase{
       String rowRead;
       while((rowRead = file.readLine())!= null){
         String[] parts = rowRead.split(",");
-        System.out.println(parts[0] + " " + parts[1] + " "+ parts[2]);
-        myGraph.addVertex(parts[0]);
         myGraph.addEdge(new Vertex<String, Float>(parts[0]), new Vertex<String, Float>(parts[1]), Float.valueOf(parts[2])); 
       } 
     }
@@ -22,8 +20,12 @@ public class GraphUseCase{
         BufferedReader file = new BufferedReader(new FileReader("../resources/italian_dist_graph.csv"));
         populateGraph(myGraph, file);
         System.out.println("Weight: "+myGraph.getWeight());
+        System.out.println("ARCHI: "+myGraph.n_archi);
         System.out.println("nVertices: "+myGraph.numberOfVertices());
-        myGraph.primAlgorithm(new Vertex<String, Float>("venezia"));
+        Graph<String, Float> MST = myGraph.primAlgorithm(new Vertex<String, Float>("abadia a isola"));
+        System.out.println("MST WEIGHT: "+ MST.getWeight());
+        System.out.println("ARCHI: "+MST.n_archi);
+        System.out.println("nVertices: "+MST.numberOfVertices());
       }catch(Exception e){
         System.out.println(e);
       }

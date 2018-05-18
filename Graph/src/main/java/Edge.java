@@ -1,11 +1,9 @@
 public class Edge<T,E extends Number> extends QueueNode<T,E>{
-  E d; 
-  int color; // 0 = white, 1 = gray, 2 = black
+  E weight; 
 
-  public Edge(T key, E value){
-    super(key,value);
-    this.d = null;
-    this.color = 0;
+  public Edge(T key, E weight){
+    super(key, (E)(Float)(Float.POSITIVE_INFINITY));
+    this.weight = weight;
   }
 
   @Override

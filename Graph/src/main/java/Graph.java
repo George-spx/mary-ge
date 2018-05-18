@@ -5,8 +5,8 @@ import java.util.*;
  * @author George Andrei Varga
  */
 public class Graph<T, E extends Number>{
-  private final int inf = -23;
   HashMap<T, Vertex<T,E>> graph;
+  public int n_archi = 0;
 
   /**
    * instantiates the HashMap graph
@@ -68,7 +68,8 @@ public class Graph<T, E extends Number>{
     addIfNotExist(source,destination);
     if(!(graph.get(source.key).adjVertices.contains(toAdd))){
       graph.get(source.key).adjVertices.add(toAdd); 
-    }
+      n_archi++;
+    }else{}
   }
  
  /**
@@ -112,7 +113,7 @@ public class Graph<T, E extends Number>{
       Set<Edge<T,E>> edges = graph.get(key).adjVertices;
       if(edges!=null){
         for(Edge<T,E> edge: edges){
-          sum = sum + edge.value.floatValue();
+          sum = sum + edge.weight.floatValue();
         }
       }
     }
@@ -155,11 +156,26 @@ public class Graph<T, E extends Number>{
     } 
   }
 
-  public Comparator<QueueNode<T,E>> initializeEComparator(){
+  public Comparator<QueueNode<T,E>> initializeQueueComparator(){
     Comparator<QueueNode<T,E>> comparator = new Comparator<QueueNode<T,E>>(){
       @Override
       public int compare(QueueNode<T,E> e1, QueueNode<T,E> e2){
         float diff = e1.value.floatValue() - e2.value.floatValue();
+        if(diff < 0){
+          return 1;
+        }else if (diff > 0){
+          return -1;
+        }else return 0;
+      }
+    };
+    return comparator;
+  }
+  
+  public Comparator<E> initializeEComparator(){
+    Comparator<E> comparator = new Comparator<E>(){
+      @Override
+      public int compare(E e1, E e2){
+        float diff = e1.floatValue() - e2.floatValue();
         if(diff < 0){
           return -1;
         }else if (diff > 0){
@@ -170,15 +186,15 @@ public class Graph<T, E extends Number>{
     return comparator;
   }
 
-  public PriorityQueue<T,E> populateQueue(Comparator<QueueNode<T,E>> comparator){
+  public PriorityQueue<T,E> populateQueue(){
+    Comparator<QueueNode<T,E>> comparator = initializeQueueComparator();
     PriorityQueue<T,E> Q = new PriorityQueue<>(comparator);
     for(T key: graph.keySet()){
-      Set<Edge<T,E>> edges = graph.get(key).adjVertices;
+      HashSet<Edge<T,E>> edges = graph.get(key).adjVertices;
       if(edges != null){
         for(Edge<T,E> edge : edges){
           try{
-            edge.value = (E)(Float)Float.MAX_VALUE;
-          Q.enqueue(edge); 
+            Q.enqueue(edge); 
           }catch(Exception e){
             System.out.println(e);
           }
@@ -188,36 +204,32 @@ public class Graph<T, E extends Number>{
     return Q;
   }
 
-  public void initializeDistance(){
-    for(T key: graph.keySet()){
-      graph.get(key).d = inf;
-    } 
-  }
-
   public Graph<T,E> primAlgorithm(Vertex<T,E> s){
-    Comparator<QueueNode<T,E>> comparator = initializeEComparator();
     Graph <T,E> MST = new Graph<>();
-    PriorityQueue<T,E> Q = populateQueue(comparator);
-    initializeDistance();
+    PriorityQueue<T,E> Q = populateQueue();
+    Comparator<E> comparator = initializeEComparator();
     try{
-      Q.decreaseKey(s.key, (E)(Float)(float)0);
-    }catch(Exception e){}
+      Q.decreaseKey((T)((graph.keySet()).toArray()[0]), (E)(Float)(float)0);
+    }catch(Exception e){System.out.println(e);}
     while(!Q.isEmpty()){
       try{
-        QueueNode<T,E> u = Q.dequeue();
-        Set<Edge<T,E>> adjU = graph.get(u.key).adjVertices;
-        for(QueueNode<T,E> edge : adjU){
-          if(Q.contains(edge.key)){
-            if(comparator.compare(u,edge) < 0){
-            
+        Edge<T,E> u =(Edge<T,E>) Q.dequeue();
+        MST.addEdge(graph.get(u.key), graph.get(u.key), u.weight);
+        System.out.println(u.key);
+        HashSet<Edge<T,E>> adjU = (graph.get(u.key)).adjVertices;
+        System.out.println(adjU.size());
+        for(Edge<T,E> v : adjU){
+          System.out.println("V "+v.key);
+          if(Q.contains(v.key)){
+            if(comparator.compare(v.weight, Q.getValue(v.key)) < 0){
+              Q.decreaseKey(v.key, v.weight); 
+              graph.get(v.key).previous = graph.get(u.key);
             } 
           }
         }
-      }catch(Exception e){
+      }catch(Exception e){ System.out.println(e);
       }
     }
   return MST;
   }
-  
-
 }

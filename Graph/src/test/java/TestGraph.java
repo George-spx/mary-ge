@@ -51,12 +51,14 @@ public class TestGraph{
   public void testWeight(){
     Graph<String,Float> myGraph = new Graph<>();
     myGraph.addVertex(new Vertex<String, Float>("Roma"));
-    myGraph.addEdge(myGraph.graph.get("Roma"), new Vertex<String, Float>("Milano"), (float)399);
-    myGraph.addEdge(myGraph.graph.get("Roma"), new Vertex<String, Float>("Indigogo"), (float)2321);
+    myGraph.addEdge(myGraph.graph.get("Roma"), new Vertex<String, Float>("Milano"), (float)400);
+    myGraph.addEdge(myGraph.graph.get("Roma"), new Vertex<String, Float>("Indigogo"), (float)2000);
+    myGraph.addEdge(myGraph.graph.get("Roma"), new Vertex<String, Float>("31ndigoddw"), (float)3000);
     myGraph.addEdge(myGraph.graph.get("Milano"), new Vertex<String, Float>("Susa"), (float)200);
     myGraph.addEdge(myGraph.graph.get("Susa"), new Vertex<String, Float>("Romania"), (float)200);
 
-    assert(myGraph.getWeight() ==  (float)3120);
+    System.out.println(myGraph.getWeight());
+    assertTrue(myGraph.getWeight() ==  (float)5800);
   }
 
   @Test
