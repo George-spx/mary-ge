@@ -1,4 +1,4 @@
-public class Edge<T,E> extends QueueNode<T,E>{
+public class Edge<T,E extends Number> extends QueueNode<T,E>{
   E d; 
   int color; // 0 = white, 1 = gray, 2 = black
 

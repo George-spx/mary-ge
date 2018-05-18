@@ -1,9 +1,9 @@
 public class Vertex<T>{
   T key;
-  int color;
+  int state;
   
   public Vertex(T key){
     this.key = key;
-    this.color = 0;
+    this.state = 0;
   }
 }
