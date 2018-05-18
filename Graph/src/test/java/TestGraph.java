@@ -9,64 +9,62 @@ import java.io.*;
 public class TestGraph{
   
   @Test
-  public void testCreateGraphOneNode(){
+  public void testCreateGraphOneNode() throws GraphException{
     Graph<String,Float> myGraph = new Graph<>();
-    Vertex<String> myVertex = new Vertex<String>("Roma");
-    myGraph.addNode(myVertex, null);
-    assertTrue(myGraph.vertices.get("Roma").equals(myVertex));
+    Vertex<String, Float> myVertex = new Vertex<String, Float>("Roma");
+
+    myGraph.addVertex(myVertex);
+
+    assertTrue(myGraph.graph.get("Roma").equals(myVertex));
   }
 
   @Test
-  public void testCreateAdj(){
+  public void testCreateEdge() throws GraphException{
     Graph<String,Float> myGraph = new Graph<>();
-    ArrayList<Edge<String, Float>> adj = new ArrayList<Edge<String,Float>>();
+    Edge<String, Float> myEdge = new Edge<>("Fiumicino", (float)200);
 
-    adj.add(new Edge<String,Float>("Fiumicino",(float)2.8565));
-    adj.add(new Edge<String,Float>("Fiume",(float)443.8565));
-    adj.add(new Edge<String,Float>("Bernini",(float)2124.8565));
-    myGraph.addNode(new Vertex<String>("Roma"), adj);
+    myGraph.addVertex(new Vertex<String, Float>("Roma"));
+    myGraph.addEdge(myGraph.graph.get("Roma"), new Vertex<String, Float>("Fiumicino"),(float) 456);
 
-    ArrayList<Vertex<String>> result = myGraph.getVertices();
-    for(Vertex<String> vertex: result){
-      System.out.println("VERT: "+vertex.key);
-    }
+    assertTrue(myGraph.getVertex("Roma").adjVertices.contains(myEdge));
   }
 
-  @Test
-  public void testAddTwoNodes(){
-    Graph<String,Float> myGraph = new Graph<>();
-    ArrayList<Edge<String, Float>> adj = new ArrayList<Edge<String,Float>>();
-    adj.add(new Edge<String,Float>("Fiumicino",(float)2.8565));
-    adj.add(new Edge<String,Float>("Fiume",(float)443.8565));
-    adj.add(new Edge<String,Float>("Bernini",(float)2124.8565));
-    myGraph.addNode(new Vertex<String>("Roma"), adj);
-    myGraph.addNode(new Vertex<String>("Roma2"), adj);
-    ArrayList<Vertex<String>> result = myGraph.getVertices();
-
-    for(Vertex<String> vertex: result){
-      System.out.println("VERT: "+vertex.key);
-    }
-
-  }
+  @Rule
+  public ExpectedException thrown = ExpectedException.none();
 
   @Test
-  public void testRemoveNode(){
+  public void testRemoveVertex() throws GraphException{
     Graph<String,Float> myGraph = new Graph<>();
-    ArrayList<Edge<String, Float>> adj = new ArrayList<Edge<String,Float>>();
-    adj.add(new Edge<String,Float>("Fiumicino",(float)2.8565));
-    adj.add(new Edge<String,Float>("Fiume",(float)443.8565));
-    myGraph.addNode(new Vertex<String>("Roma"), adj);
-    myGraph.printNodes(); 
-    myGraph.removeNode(new Vertex<String>("Roma"));
+    Vertex<String, Float> myVertex1 = new Vertex<String, Float>("Roma");
+    Vertex<String, Float> myVertex2 = new Vertex<String, Float>("Milano");
+
+    myGraph.addVertex(myVertex1);
+    myGraph.addVertex(myVertex2);
+    myGraph.removeVertex(myGraph.graph.get("Roma"));
+
+    thrown.expect(GraphException.class);
+    thrown.expectMessage("Vertex does not exist");
+    myGraph.getVertex("Roma");
   }
   
   @Test
   public void testWeight(){
     Graph<String,Float> myGraph = new Graph<>();
-    ArrayList<Edge<String, Float>> adj = new ArrayList<Edge<String,Float>>();
-    adj.add(new Edge<String,Float>("Fiumicino",(float)2.8565));
-    adj.add(new Edge<String,Float>("Fiume",(float)443.8565));
-    myGraph.addNode(new Vertex<String>("Roma"), adj);
-    System.out.println("WEIGTH: "+myGraph.getWeight());
+    myGraph.addVertex(new Vertex<String, Float>("Roma"));
+    myGraph.addEdge(myGraph.graph.get("Roma"), new Vertex<String, Float>("Milano"), (float)399);
+    myGraph.addEdge(myGraph.graph.get("Roma"), new Vertex<String, Float>("Indigogo"), (float)2321);
+    myGraph.addEdge(myGraph.graph.get("Milano"), new Vertex<String, Float>("Susa"), (float)200);
+    myGraph.addEdge(myGraph.graph.get("Susa"), new Vertex<String, Float>("Romania"), (float)200);
+
+    assert(myGraph.getWeight() ==  (float)3120);
+  }
+
+  @Test
+  public void testAddTwiceTheSameVertex(){
+    Graph<String,Float> myGraph = new Graph<>();
+    myGraph.addVertex(new Vertex<String, Float>("Roma"));
+    myGraph.addVertex(new Vertex<String, Float>("Roma"));
+
+    assertEquals(myGraph.numberOfVertices(), 1);
   }
 }
