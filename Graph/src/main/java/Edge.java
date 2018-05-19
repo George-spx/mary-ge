@@ -1,12 +1,13 @@
-public class Edge<T,E extends Number> extends QueueNode<T,E>{
-  E weight; 
+public class Edge<T,E extends Number>{
+  T key;
+  E weight;
 
   public Edge(T key, E weight){
-    super(key, (E)(Float)(Float.POSITIVE_INFINITY));
+    this.key = key;
     this.weight = weight;
   }
 
-  @Override
+  /*@Override
   public boolean equals(Object other) {
     if(other != null && other instanceof Edge){
       if(((Edge)other).key.equals(this.key)){
@@ -21,5 +22,5 @@ public class Edge<T,E extends Number> extends QueueNode<T,E>{
     int result = 17;
     result = 31 * result + key.hashCode();
     return result;
-  }
+  }*/
 }

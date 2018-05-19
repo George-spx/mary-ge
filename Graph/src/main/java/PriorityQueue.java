@@ -69,7 +69,7 @@ public class PriorityQueue <T,E>{
   }
 
   public boolean isEmpty(){
-    if(heapQueue.size() == 0){
+    if(heapQueue.size() <= 0){
       return true;
     }else return false;
   }
@@ -82,21 +82,22 @@ public class PriorityQueue <T,E>{
   public QueueNode<T,E> dequeue() throws PriorityQueueException{
     if(heapQueue.size() == 0){
       throw new PriorityQueueException("Cannot extract, Queue is empty!");
-    }
+    }else{
     QueueNode<T,E> topQueue = heapQueue.get(0);
     nodePosition.remove(topQueue.key);
     heapQueue.set(0, heapQueue.get(heapQueue.size()-1));
     heapQueue.remove(heapQueue.size()-1);
     heapify(0);
     return topQueue;
+    }
   }
 
   public void hashUpdateIndexes(int i1, int i2){
     nodePosition.remove(heapQueue.get(i2).key);
     nodePosition.remove(heapQueue.get(i1).key);
 
-    nodePosition.put(heapQueue.get(i2).key, i2);
-    nodePosition.put(heapQueue.get(i1).key, i1);
+    nodePosition.put(heapQueue.get(i1).key, i2);
+    nodePosition.put(heapQueue.get(i2).key, i1);
   }
 
   /**

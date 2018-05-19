@@ -22,10 +22,11 @@ public class GraphUseCase{
         System.out.println("Weight: "+myGraph.getWeight());
         System.out.println("ARCHI: "+myGraph.n_archi);
         System.out.println("nVertices: "+myGraph.numberOfVertices());
-        Graph<String, Float> MST = myGraph.primAlgorithm(new Vertex<String, Float>("abadia a isola"));
-        System.out.println("MST WEIGHT: "+ MST.getWeight());
-        System.out.println("ARCHI: "+MST.n_archi);
-        System.out.println("nVertices: "+MST.numberOfVertices());
+
+        Graph<String,Float> mst = myGraph.prim(new Vertex<String, Float>("abadia a isola"));
+        System.out.println("Weight: "+mst.getWeight());
+        System.out.println("ARCHI: "+mst.n_archi);
+        System.out.println("nVertices: "+mst.numberOfVertices());
       }catch(Exception e){
         System.out.println(e);
       }

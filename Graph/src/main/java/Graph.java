@@ -66,10 +66,10 @@ public class Graph<T, E extends Number>{
   public void addEdge(Vertex<T,E> source, Vertex<T,E> destination, E weight){
     Edge<T,E> toAdd = new Edge<T,E>(destination.key, weight);
     addIfNotExist(source,destination);
-    if(!(graph.get(source.key).adjVertices.contains(toAdd))){
-      graph.get(source.key).adjVertices.add(toAdd); 
+    //if(!(graph.get(source.key).adjVertices.containsKey(toAdd.key))){
+      graph.get(source.key).adjVertices.put(toAdd.key, toAdd); 
       n_archi++;
-    }else{}
+    //}else{}
   }
  
  /**
@@ -110,10 +110,10 @@ public class Graph<T, E extends Number>{
   public float getWeight(){
   float sum = 0;
     for(T key : graph.keySet()){
-      Set<Edge<T,E>> edges = graph.get(key).adjVertices;
+      HashMap<T, Edge<T,E>> edges = graph.get(key).adjVertices;
       if(edges!=null){
-        for(Edge<T,E> edge: edges){
-          sum = sum + edge.weight.floatValue();
+        for(T keyEdge: edges.keySet()){
+          sum = sum + edges.get(keyEdge).weight.floatValue();
         }
       }
     }
@@ -146,11 +146,11 @@ public class Graph<T, E extends Number>{
    */ 
   public void printNodes(){
     for(T key: graph.keySet()){
-      Set<Edge<T,E>> edges = graph.get(key).adjVertices;
+      HashMap<T, Edge<T,E>> edges = graph.get(key).adjVertices;
       System.out.println("KEY: "+key);
       if(edges!=null){
-        for(Edge<T,E> edge: edges){
-          System.out.println(edge.key+" --> "+edge.value);
+        for(T edgeKey: edges.keySet()){
+          System.out.println(edgeKey+" --> "+edges.get(edgeKey).weight);
         }
       }
     } 
@@ -188,48 +188,43 @@ public class Graph<T, E extends Number>{
 
   public PriorityQueue<T,E> populateQueue(){
     Comparator<QueueNode<T,E>> comparator = initializeQueueComparator();
-    PriorityQueue<T,E> Q = new PriorityQueue<>(comparator);
+    PriorityQueue<T,E> q = new PriorityQueue<>(comparator);
     for(T key: graph.keySet()){
-      HashSet<Edge<T,E>> edges = graph.get(key).adjVertices;
-      if(edges != null){
-        for(Edge<T,E> edge : edges){
-          try{
-            Q.enqueue(edge); 
-          }catch(Exception e){
-            System.out.println(e);
-          }
-        }
-      } 
-    }
-    return Q;
+      try{
+        q.enqueue(graph.get(key)); 
+      }catch(PriorityQueueException e){System.out.println(e);}
+    } 
+    return q;
   }
 
-  public Graph<T,E> primAlgorithm(Vertex<T,E> s){
-    Graph <T,E> MST = new Graph<>();
-    PriorityQueue<T,E> Q = populateQueue();
+
+  public Graph<T,E> prim(Vertex<T,E> s){
+    Graph<T,E> MST = new Graph<T,E>();
+    PriorityQueue<T,E> q = populateQueue();
     Comparator<E> comparator = initializeEComparator();
     try{
-      Q.decreaseKey((T)((graph.keySet()).toArray()[0]), (E)(Float)(float)0);
-    }catch(Exception e){System.out.println(e);}
-    while(!Q.isEmpty()){
-      try{
-        Edge<T,E> u =(Edge<T,E>) Q.dequeue();
-        MST.addEdge(graph.get(u.key), graph.get(u.key), u.weight);
-        System.out.println(u.key);
-        HashSet<Edge<T,E>> adjU = (graph.get(u.key)).adjVertices;
-        System.out.println(adjU.size());
-        for(Edge<T,E> v : adjU){
-          System.out.println("V "+v.key);
-          if(Q.contains(v.key)){
-            if(comparator.compare(v.weight, Q.getValue(v.key)) < 0){
-              Q.decreaseKey(v.key, v.weight); 
-              graph.get(v.key).previous = graph.get(u.key);
-            } 
-          }
-        }
-      }catch(Exception e){ System.out.println(e);
+      q.decreaseKey(s.key, (E)(Float)(float)(0)); 
+      while(!q.isEmpty()){
+      Vertex<T,E> u = (Vertex<T,E>)q.dequeue();
+      Vertex<T,E> uPr = u.previous;
+      if(uPr != null){
+        E wuv = graph.get(uPr.key).adjVertices.get(u.key).weight;
+        MST.addEdge(u, uPr, wuv);
+        System.out.println(u.key+" "+ uPr.key +" "+ wuv);
       }
-    }
-  return MST;
+      HashMap<T,Edge<T,E>> adj = graph.get(u.key).adjVertices;
+      for(T vKey : adj.keySet()){
+        if(q.contains(vKey)){
+          if((comparator.compare(adj.get(vKey).weight, graph.get(vKey).value))< 0){
+            q.decreaseKey(vKey, adj.get(vKey).weight);
+            graph.get(vKey).previous = u; 
+            graph.get(vKey).value = adj.get(vKey).weight;
+          } 
+        }
+      }
+      }
+    }catch(PriorityQueueException e){System.out.println("PIRLA");}
+    return MST;
   }
+
 }

@@ -1,13 +1,12 @@
 import java.util.*;
-public class Vertex<T, E extends Number>{
+public class Vertex<T, E extends Number> extends QueueNode<T,E>{
 
   Vertex<T,E> previous;
-  T key;
-  HashSet<Edge<T, E>> adjVertices;
+  HashMap<T, Edge<T, E>> adjVertices;
   
   public Vertex(T key){
+    super(key, (E)(Float)Float.POSITIVE_INFINITY);
     this.previous = null;
-    this.key = key;
-    adjVertices = new HashSet<>();
+    adjVertices = new HashMap<>();
   }
 }
