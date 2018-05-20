@@ -83,12 +83,13 @@ public class PriorityQueue <T,E>{
     if(heapQueue.size() == 0){
       throw new PriorityQueueException("Cannot extract, Queue is empty!");
     }else{
-    QueueNode<T,E> topQueue = heapQueue.get(0);
-    nodePosition.remove(topQueue.key);
-    heapQueue.set(0, heapQueue.get(heapQueue.size()-1));
-    heapQueue.remove(heapQueue.size()-1);
-    heapify(0);
-    return topQueue;
+      QueueNode<T,E> topQueue = heapQueue.get(0);
+      nodePosition.remove(topQueue.key);
+      heapQueue.set(0, heapQueue.get(heapQueue.size()-1));
+      nodePosition.put(heapQueue.get(0).key, 0);
+      heapQueue.remove(heapQueue.size()-1);
+      heapify(0);
+      return topQueue;
     }
   }
 
@@ -150,7 +151,7 @@ public class PriorityQueue <T,E>{
         }
       }
     }
-  }
+      }
 
   /**
    *

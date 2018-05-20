@@ -1,5 +1,3 @@
-
-
 import java.io.*;
 public class GraphUseCase{
    
@@ -15,18 +13,18 @@ public class GraphUseCase{
     }
 
     public static void main(String[] args){
-      Graph<String, Float> myGraph = new Graph<>();
+      Graph<String, Float> myGraph = new Graph<>(true, false);
       try{
         BufferedReader file = new BufferedReader(new FileReader("../resources/italian_dist_graph.csv"));
         populateGraph(myGraph, file);
-        System.out.println("Weight: "+myGraph.getWeight());
-        System.out.println("ARCHI: "+myGraph.n_archi);
-        System.out.println("nVertices: "+myGraph.numberOfVertices());
-
+        System.out.println("Weight of the graph (km): "+myGraph.getWeight()/1000);
+        System.out.println("Number of edges: "+myGraph.getNEdges());
+        System.out.println("Number of Vertices: "+myGraph.numberOfVertices());
+        System.out.println("_____");
         Graph<String,Float> mst = myGraph.prim(new Vertex<String, Float>("abadia a isola"));
-        System.out.println("Weight: "+mst.getWeight());
-        System.out.println("ARCHI: "+mst.n_archi);
-        System.out.println("nVertices: "+mst.numberOfVertices());
+        System.out.println("Weight of the MST (km): "+mst.getWeight()/1000);
+        System.out.println("Edges of the MST: "+mst.getNEdges());
+        System.out.println("Number of vertices of the MST: "+mst.numberOfVertices());
       }catch(Exception e){
         System.out.println(e);
       }
